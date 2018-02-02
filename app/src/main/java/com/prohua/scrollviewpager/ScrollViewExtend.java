@@ -44,7 +44,7 @@ public class ScrollViewExtend extends ScrollView {
         return super.onInterceptTouchEvent(ev);
     }
 
-    public void setOnScollChangedListener(OnScrollChangedListener onScrollChangedListener) {
+    public void setOnScrollChangedListener(OnScrollChangedListener onScrollChangedListener) {
         this.onScrollChangedListener = onScrollChangedListener;
     }
 

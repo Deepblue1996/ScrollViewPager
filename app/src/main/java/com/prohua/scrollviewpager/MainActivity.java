@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerHelper.bind(magicIndicator2, viewPager);
 
         ScrollViewExtend scrollViewExtend = (ScrollViewExtend) findViewById(R.id.scrollView);
-        scrollViewExtend.setOnScollChangedListener(new ScrollViewExtend.OnScrollChangedListener() {
+        scrollViewExtend.setOnScrollChangedListener(new ScrollViewExtend.OnScrollChangedListener() {
             @Override
             public void onScrollChanged(ScrollViewExtend scrollViewExtend, int x, int y, int oldX, int oldY) {
                 Log.i("滑动","y:"+y+" oldY:"+oldY);
