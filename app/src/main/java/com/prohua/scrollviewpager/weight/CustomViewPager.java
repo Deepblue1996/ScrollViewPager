@@ -1,4 +1,4 @@
-package com.prohua.scrollviewpager;
+package com.prohua.scrollviewpager.weight;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

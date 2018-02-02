@@ -7,8 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.prohua.universal.DefaultAdapter;
 import com.prohua.universal.DefaultViewHolder;
@@ -20,13 +18,13 @@ import java.util.List;
  * Created by Deep on 2018/2/2 0002.
  */
 
-public class MyFragment extends Fragment {
+public class ChildFragment extends Fragment {
     private RecyclerView recyclerView;
 
     private DefaultAdapter defaultAdapter;
     private List<String> stringList;
 
-    public MyFragment() {
+    public ChildFragment() {
         // Required empty public constructor
     }
 
