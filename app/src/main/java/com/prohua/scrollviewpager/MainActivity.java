@@ -19,6 +19,11 @@ import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_DRAGGING;
+
 /**
  * Demo ScrollView 嵌套> ViewPager 嵌套> RecyclerView
  * Created by Deep on 2018/2/2 0002.
@@ -33,6 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private ScrollViewExtend scrollViewExtend;
 
     private String[] titles = {"Tab One", "Tab Two", "Tab Three", "Tab Four"};
+
+    private List<Integer> scrollPosition;
+
+    private int nowPosition = 0;
+
+    private int haveScrollY = 0;
+    private int haveScrollYTemp = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
         scrollViewExtend.setOnScrollChangedListener(new ScrollViewExtend.OnScrollChangedListener() {
             @Override
             public void onScrollChanged(ScrollViewExtend scrollViewExtend, int x, int y, int oldX, int oldY) {
-                Log.i("滑动", "y:" + y + " oldY:" + oldY);
+
+                haveScrollY = y;
 
                 if (y > ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
                     magicIndicator2.setVisibility(View.VISIBLE);
@@ -103,5 +116,61 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        scrollPosition = new ArrayList<>();
+
+        for (int i = 0; i < titles.length; i++) {
+            scrollPosition.add(0);
+        }
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                // 如果页码变了
+                if (nowPosition != position) {
+                    // 如果前页位置大于头高度
+                    if (haveScrollYTemp >= ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
+                        // 如果当前页位置小于头高度
+                        if (scrollPosition.get(position) <= ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
+                            // 则默认移动到头部位置，并设置
+                            scrollViewExtend.scrollTo(0, ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height);
+                            scrollPosition.set(position, ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height);
+                        } else {
+                            // 否则移动到原位置
+                            scrollViewExtend.scrollTo(0, scrollPosition.get(position));
+                        }
+                    } else {
+                        // 前页位置小于头高度
+                        // 当前页位置大于头高度
+                        /*if(scrollPosition.get(position) >= ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
+                            // 保持一致
+                            scrollViewExtend.scrollTo(0, haveScrollYTemp);
+                            scrollPosition.set(position, haveScrollYTemp);
+                        } else {
+                            scrollViewExtend.scrollTo(0, scrollPosition.get(position));
+                        }*/
+                        // 保持一致
+                        scrollViewExtend.scrollTo(0, haveScrollYTemp);
+                        scrollPosition.set(position, haveScrollYTemp);
+                    }
+                    scrollPosition.set(nowPosition, haveScrollYTemp);
+                }
+                nowPosition = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // 记录前页
+                if (state == SCROLL_STATE_DRAGGING) {
+                    haveScrollYTemp = haveScrollY;
+                }
+            }
+        });
+
     }
 }
