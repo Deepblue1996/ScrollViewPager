@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.prohua.scrollviewpager.weight.CustomViewPager;
 import com.prohua.universal.DefaultAdapter;
 import com.prohua.universal.DefaultViewHolder;
 
@@ -24,10 +25,10 @@ public class ChildFragment extends Fragment {
     private DefaultAdapter defaultAdapter;
     private List<String> stringList;
 
+
     public ChildFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.prohua.scrollviewpager.ChildFragment;
+import com.prohua.scrollviewpager.ChildScrollFragment;
 
 /**
  * Created by Deep on 2018/2/2 0002.
@@ -26,10 +27,18 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new ChildFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", titles[position]);
-        fragment.setArguments(bundle);
+        Fragment fragment;
+        if(position == 0) {
+            fragment = new ChildScrollFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", titles[position]);
+            fragment.setArguments(bundle);
+        } else {
+            fragment = new ChildFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("title", titles[position]);
+            fragment.setArguments(bundle);
+        }
         return fragment;
     }
 
