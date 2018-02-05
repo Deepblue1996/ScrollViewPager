@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.widget.ScrollView;
 
 /**
+ * 滑动冲突解决
  * Created by Deep on 2018/2/2 0002.
  */
 
