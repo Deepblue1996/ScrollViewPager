@@ -113,4 +113,19 @@ public class CustomViewPager extends ViewPager {
         return result;
     }
 
+    private ListenCurrentItem listenCurrentItem;
+
+    public void addListenCurrentItem(ListenCurrentItem listenCurrentItem) {
+        this.listenCurrentItem = listenCurrentItem;
+    }
+
+    @Override
+    public void setCurrentItem(int item) {
+        listenCurrentItem.ListenCurrentItemMethod(item);
+        super.setCurrentItem(item);
+    }
+
+    public interface ListenCurrentItem {
+        void ListenCurrentItemMethod(int item);
+    }
 }

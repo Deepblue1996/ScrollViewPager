@@ -20,6 +20,8 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:scrollbars="none"
             android:fillViewport="true">
 
             <LinearLayout
@@ -51,6 +53,8 @@
 
                 <com.prohua.scrollviewpager.weight.CustomViewPager
                     android:id="@+id/viewPager"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

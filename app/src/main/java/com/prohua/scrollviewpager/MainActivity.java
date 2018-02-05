@@ -2,9 +2,9 @@ package com.prohua.scrollviewpager;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,6 +76,14 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(titles.length);
         viewPager.setAdapter(fragmentPagerAdapter);
 
+        viewPager.addListenCurrentItem(new CustomViewPager.ListenCurrentItem() {
+            @Override
+            public void ListenCurrentItemMethod(int item) {
+                // 记录前页
+                haveScrollYTemp = haveScrollY;
+            }
+        });
+
         // ----------------- tabLayout
 
         magicIndicator.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -130,34 +138,19 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
                 // 如果页码变了
                 if (nowPosition != position) {
-                    // 如果前页位置大于头高度
-                    if (haveScrollYTemp >= ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
-                        // 如果当前页位置小于头高度
-                        if (scrollPosition.get(position) <= ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
-                            // 则默认移动到头部位置，并设置
-                            scrollViewExtend.scrollTo(0, ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height);
-                            scrollPosition.set(position, ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height);
-                        } else {
-                            // 否则移动到原位置
+                    // 视图滑动延迟执行
+                    new Handler().postDelayed(new Runnable() {
+                        public void run() {
+                            // execute the task
+                            // anim scroll
+                            // scrollViewExtend.smoothScrollTo(0, scrollPosition.get(position));
                             scrollViewExtend.scrollTo(0, scrollPosition.get(position));
                         }
-                    } else {
-                        // 前页位置小于头高度
-                        // 当前页位置大于头高度
-                        /*if(scrollPosition.get(position) >= ((LinearLayout.LayoutParams) headerTextView.getLayoutParams()).height) {
-                            // 保持一致
-                            scrollViewExtend.scrollTo(0, haveScrollYTemp);
-                            scrollPosition.set(position, haveScrollYTemp);
-                        } else {
-                            scrollViewExtend.scrollTo(0, scrollPosition.get(position));
-                        }*/
-                        // 保持一致
-                        scrollViewExtend.scrollTo(0, haveScrollYTemp);
-                        scrollPosition.set(position, haveScrollYTemp);
-                    }
+                    }, 0);
+
                     scrollPosition.set(nowPosition, haveScrollYTemp);
                 }
                 nowPosition = position;
